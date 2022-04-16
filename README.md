@@ -16,6 +16,9 @@ https://www.kaggle.com/ 에서 영화 데이터와 유저들의 평점 데이터
 ### Main(영화 추천x)
 ![image](https://user-images.githubusercontent.com/96563183/163665299-b20d2347-1e67-4b51-b47e-102cb540fca5.png)
 
+### 영화 평가
+![image](https://user-images.githubusercontent.com/96563183/163665703-c154d5be-7186-45f7-875a-6285ed197bf9.png)
+
 ### Main(영화 추천o)
 ![image](https://user-images.githubusercontent.com/96563183/163665575-b5aa4907-10fe-47f4-b731-56ccd95d778d.png)
 
