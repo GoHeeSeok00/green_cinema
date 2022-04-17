@@ -13,17 +13,14 @@ import boto3
 
 
 def home(request):
-    # 사용자가 있는지 없는지 판단
-    user = request.user.is_authenticated
-    # 사용자가 있으면 메인화면
-    if user:
-        return redirect('/main')
-    # 사용자가 없으면 로그인화면
-    else:
-        return redirect(('/sign-in'))
+    # 로그인 여부 판단
+    if not request.user.is_authenticated:
+        return redirect("/sign-in")
+
+    return redirect('/main')
 
 
-
+# 추천 시스템 api
 def show_movie(request):
     # s3_client = boto3.client('s3')
     # s3_rating_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
@@ -54,20 +51,20 @@ def main_view(request):
             # Movie.objects.all() : 무비 모델에 있는 모든 오브젝트를 불러옴
             all_movie = list(Movie.objects.all())
             shuffle(all_movie)
-            movie_shuffle = all_movie
             my_rating = Rating.objects.filter(user_id=request.user.id).exists()
-            print(my_rating)
-            if my_rating == True:
+            # print(my_rating)
+            if my_rating:
+                # 추천 시스템 api 호출
                 results = show_movie(request)
                 suggestion_list = []
                 for result in results:
                     movie = Movie.objects.get(id=result)
                     suggestion_list.append(movie)
 
-                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50], 'suggestion_list': suggestion_list[:6]}) 
+                return render(request, 'movie/main.html', {'movie': all_movie[:50], 'suggestion_list': suggestion_list[:6]})
 
             else:
-                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50]})
+                return render(request, 'movie/main.html', {'movie': all_movie[:50]})
             # test.html 에서 데이터 response 확인 완료
             # return render(request, 'movie/test.html', {'movie': movie_shuffle[:50]})
         else:
